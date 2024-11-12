@@ -1,0 +1,21 @@
+{
+  "Comment": "Fluxo para processamento de pedidos em app de delivery",
+  "StartAt": "RegistrarPedido",
+  "States": {
+    "RegistrarPedido": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:SaveOrderFunction",
+      "Next": "EnviarNotificacao"
+    },
+    "EnviarNotificacao": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:SendPushNotificationFunction",
+      "Next": "GerenciarStatusPedido"
+    },
+    "GerenciarStatusPedido": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:ManageOrderStatusFunction",
+      "End": true
+    }
+  }
+}
